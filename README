@@ -1,0 +1,7 @@
+Adaptive Huffman encoder/decoder
+--------------------------------
+
+Simple Adaptive Huffman encoder/decoder implementation.
+Works for both text/binary formats.
+Compress rate for text files is about 0.6.
+
