@@ -1,9 +1,8 @@
 /*
- * Autor: David Durman (xdurma00)
- * Datum: 8.4.2008
- * Soubor: main.c
- * Komentar: Adaptivni Huffmanovo kodovani / dekodovani
+ * Adaptive Huffman encoder/decoder.
+ * @author: David Durman
  */ 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -28,7 +27,7 @@ int main(int argc, char **argv)
 
   opterr = 0;
 
-  // zpracovani argumentu programu
+  // process program arguments
   while ((c = getopt(argc, argv, "i:o:l:cxh")) != -1){
     switch (c){
     case 'i':
@@ -58,13 +57,13 @@ int main(int argc, char **argv)
     }
   }
 
-  // napoveda
+  // help
   if (hFlag == 1){
     printf("USAGE: ahed -h | -c | -x [-i input_file] [-o output_file] [-l log_file] \n");
     return AHEDOK;
   }
 
-  // vstupni soubor
+  // input file
   if (ifile == NULL)
     inputFile = stdin;
   else
@@ -74,7 +73,7 @@ int main(int argc, char **argv)
     return AHEDFail;
   }
 
-  // vystupni soubor
+  // output file
   if (ofile == NULL)
     outputFile = stdout;
   else
@@ -84,7 +83,7 @@ int main(int argc, char **argv)
     return AHEDFail;
   }
 
-  // logovaci soubor
+  // log file
   if (lFlag == 1){
     if (lfile == NULL){
       AHEDError("can not open a log file");
@@ -100,7 +99,7 @@ int main(int argc, char **argv)
     return AHEDFail;
   }
 
-  // zaznam o kodovani / dekodovani
+  // encoding/decoding log structure
   tAHED* ahed = malloc(sizeof(tAHED));
   if (ahed == NULL){
     AHEDError("not enough memory");
@@ -113,17 +112,15 @@ int main(int argc, char **argv)
     AHEDDecoding(ahed, inputFile, outputFile);  
 
 
-  // vypis vystupni zpravy
+  // log
   if (logFile != NULL){
-    fprintf(logFile, "login = xdurma00\n");
     fprintf(logFile, "uncodedSize = %lu\n", ahed->uncodedSize);
     fprintf(logFile, "codedSize = %lu\n", ahed->codedSize);
     fclose(logFile);
   }
 
+  // cleanup
   free(ahed);
-
-  // zavreni souboru
   if (inputFile != NULL) fclose(inputFile);
   if (outputFile != NULL) fclose(outputFile);
 

@@ -1,8 +1,6 @@
 /*
- * Autor: David Durman (xdurma00)
- * Datum: 8.4.2008
- * Soubor: ahed.h
- * Komentar: Adaptivni Huffmanovo kodovani / dekodovani
+ * Adaptive Huffman encoder/decoder.
+ * @author: David Durman
  */ 
 
 #ifndef __KKO_AHED_H__
@@ -14,41 +12,29 @@
 #define AHEDOK 0
 #define AHEDFail -1
 
-/* Datovy typ zaznamu o (de)kodovani */
+// Encoder/decoder log
 typedef struct{
-	/* velikost nekodovaneho retezce */
+	/* size of the decoded string */
 	int64_t uncodedSize;
-	/* velikost kodovaneho retezce */
+	/* size of the encoded string */
 	int64_t codedSize;
 } tAHED;
 
 
-/* Nazev:
- *   AHEDEncoding
- * Cinnost:
- *   Funkce koduje vstupni soubor do vystupniho souboru a porizuje zaznam o kodovani.
- * Parametry:
- *   ahed - zaznam o kodovani
- *   inputFile - vstupni soubor (nekodovany)
- *   outputFile - vystupní soubor (kodovany)
- * Navratova hodnota: 
- *    0 - kodovani probehlo v poradku
- *    -1 - pri kodovani nastala chyba
+/** 
+ * Encodes the input file, stores the result to the output file and log actions.
+ * @param {tAHED*} ahed encoding log
+ * @param {FILE*} inputFile decoded input file
+ * @param {FILE*} outputFile encoded output file
+ * @return 0 if encoding went OK, -1 otherwise
  */
 int AHEDEncoding(tAHED *ahed, FILE *inputFile, FILE *outputFile);
-
-
-/* Nazev:
- *   AHEDDecoding
- * Cinnost:
- *   Funkce dekoduje vstupni soubor do vystupniho souboru a porizuje zaznam o dekodovani.
- * Parametry:
- *   ahed - zaznam o dekodovani
- *   inputFile - vstupni soubor (kodovany)
- *   outputFile - vystupní soubor (nekodovany)
- * Navratova hodnota: 
- *    0 - dekodovani probehlo v poradku
- *    -1 - pri dekodovani nastala chyba
+/** 
+ * Decodes the input file, store result to the output file and log actions.
+ * @param {tAHED*} ahed decoding log
+ * @param {FILE*} inputFile encoded input file
+ * @param {FILE*} outputFile decoded output file
+ * @return 0 decoding was OK, -1 otherwise
  */
 int AHEDDecoding(tAHED *ahed, FILE *inputFile, FILE *outputFile);
 
